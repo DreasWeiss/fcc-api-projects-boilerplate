@@ -1,0 +1,28 @@
+{
+  "name": "fcc-api-projects-boilerplate",
+  "version": "0.0.1",
+  "description": "An FCC Backend Challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.0",
+    "express": "^4.12.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DreasWeiss/fcc-api-projects-boilerplate.git"
+  },
+  "author": "Dreas Weiss <dreasweiss@gmail.com>",
+  "keywords": [
+    "node",
+    "express",
+    "freeCodeCamp",
+    "Timestamp Microservice"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
