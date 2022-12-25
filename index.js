@@ -8,7 +8,7 @@ var app = express();
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
-app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
+app.use(cors({ optionsSuccessStatus: 200 }));  // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
@@ -27,44 +27,26 @@ app.get("/api", function (req, res) {
   });
 });
 
-app.get("/api/:date", (req, res) => {
-  const date = req.params.date;
-  if (date.length === 13 && typeof(+date) === 'number') {
-    res.json({
-      unix: Number(date),
-      utc: new Date(+date).toUTCString()
-    });
-  } 
-  else if (date.match(/\d\d\d\d-\d\d-\d\d/)) {
-    if (new Date(date).toUTCString() !== "Invalid Date") {
-      res.json({
-        unix: new Date(date).getTime(),
-        utc: new Date(date).toUTCString()
-      });
-    } else {
-      res.json({
-        error: "Invalid Date"
-      });
-    }   
-  } 
-  else if (date.match(/\d\d\d\d_\d\d_\d\d/)) {
-    let convDate = date.split('_').join('-');
-    if (new Date(convDate).toUTCString() !== "Invalid Date") {
-      res.json({
-        unix: new Date(convDate).getTime(),
-        utc: new Date(convDate).toUTCString()
-      });
-    } else {
-      res.json({
-        error: "Invalid Date"
-      });
+app.get("/api/:timestamp", (req, res) => {
+  let timestamp = req.params.timestamp;
+
+  if (timestamp.match(/\d{5,}/)) {
+    timestamp = Number(timestamp);
+  }
+
+  let date = new Date(timestamp);
+
+  if (date.toUTCString() == "Invalid Date") {
+    res.json({ error: date.toUTCString() });
+  }
+
+  res.json(
+    {
+    unix: date.valueOf(),
+    utc: date.toUTCString()
     }
-  }
-  else {
-    res.json({
-      error: "Invalid Date"
-    });
-  }
+  );
+
 });
 
 // listen for requests :)
